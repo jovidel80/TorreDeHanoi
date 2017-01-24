@@ -22,9 +22,14 @@
         #mensaje {
             text-align: center;
         }
-        
+
         #ganador {
             text-align: center;
+        }
+
+        button {
+            margin: auto;
+            display: block;
         }
     </style>
 </head>
@@ -33,19 +38,19 @@
 <br>
 <table>
     <tr>
-        <td class="cuadro" id=1 onclick="changeSymbol(1); evaluar(1); setMensaje()"></td>
-        <td class="cuadro" id=2 onclick="changeSymbol(2); evaluar(2); setMensaje()"></td>
-        <td class="cuadro" id=3 onclick="changeSymbol(3); evaluar(3); setMensaje()"></td>
+        <td class="cuadro" id="1" onclick="changeSymbol('1')"></td>
+        <td class="cuadro" id="2" onclick="changeSymbol('2')"></td>
+        <td class="cuadro" id="3" onclick="changeSymbol('3')"></td>
     </tr>
     <tr>
-        <td class="cuadro" id=4 onclick="changeSymbol(4); evaluar(4); setMensaje()"></td>
-        <td class="cuadro" id=5 onclick="changeSymbol(5); evaluar(5); setMensaje()"></td>
-        <td class="cuadro" id=6 onclick="changeSymbol(6); evaluar(6); setMensaje()"></td>
+        <td class="cuadro" id="4" onclick="changeSymbol('4')"></td>
+        <td class="cuadro" id="5" onclick="changeSymbol('5')"></td>
+        <td class="cuadro" id="6" onclick="changeSymbol('6')"></td>
     </tr>
     <tr>
-        <td class="cuadro" id=7 onclick="changeSymbol(7); evaluar(7); setMensaje()"></td>
-        <td class="cuadro" id=8 onclick="changeSymbol(8); evaluar(8); setMensaje()"></td>
-        <td class="cuadro" id=9 onclick="changeSymbol(9); evaluar(9); setMensaje()"></td>
+        <td class="cuadro" id="7" onclick="changeSymbol('7')"></td>
+        <td class="cuadro" id="8" onclick="changeSymbol('8')"></td>
+        <td class="cuadro" id="9" onclick="changeSymbol('9')"></td>
     </tr>
 </table>
 <br>
@@ -60,20 +65,22 @@
 </div>
 <br>
 <br>
-<input type="button" onclick="prueba()" value="Test">
+<button onclick="location.reload()">Recarcar</button>
 
 <script>
     var turno = "X";
-    var ganador = false;
-    var mensaje = true;
 
     function changeSymbol(symbol) {
         if (turno == "X" && document.getElementById(symbol).innerText == "") {
             document.getElementById(symbol).innerText = "X";
+            evaluar();
             turno = "O";
+            setMensaje();
         } else if (turno == "O" && document.getElementById(symbol).innerText == "") {
             document.getElementById(symbol).innerText = "O";
+            evaluar();
             turno = "X";
+            setMensaje();
         }
     }
 
@@ -83,116 +90,79 @@
         }
     }
 
-    function evaluar(symbol) {
-        if ((document.getElementById("1").innerText === 
-            document.getElementById("2").innerText && 
-            document.getElementById("1").innerText) === document.getElementById("3").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            
-            // test
-            console.log(document.getElementById("1").innerText);
-            console.log(document.getElementById("2").innerText);
-            console.log(document.getElementById("3").innerText);
-            console.log(document.getElementById(symbol).innerText);
+    function evaluar() {
+
+        if (document.getElementById("1").innerText === turno &&
+                document.getElementById("2").innerText === turno &&
+                document.getElementById("3").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("1").style.backgroundColor = "green";
+            document.getElementById("2").style.backgroundColor = "green";
+            document.getElementById("3").style.backgroundColor = "green";
             return;
         }
-        if ((document.getElementById("4").innerText ===
-            document.getElementById("5").innerText &&
-            document.getElementById("4").innerText) === document.getElementById("6").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            // test
-            console.log(document.getElementById("4").innerText);
-            console.log(document.getElementById("5").innerText);
-            console.log(document.getElementById("6").innerText);
-            console.log(document.getElementById(symbol).innerText);
-            return;
-
-        }
-        if ((document.getElementById("7").innerText ===
-            document.getElementById("8").innerText &&
-            document.getElementById("7").innerText) === document.getElementById("9").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            // test
-            console.log(document.getElementById("7").innerText);
-            console.log(document.getElementById("8").innerText);
-            console.log(document.getElementById("9").innerText);
-            return;
-
-            console.log(document.getElementById(symbol).innerText);
-        }
-        if ((document.getElementById("1").innerText ===
-            document.getElementById("4").innerText &&
-            document.getElementById("1").innerText) === document.getElementById("7").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            // test
-            console.log(document.getElementById("1").innerText);
-            console.log(document.getElementById("4").innerText);
-            console.log(document.getElementById("7").innerText);
-            console.log(document.getElementById(symbol).innerText);
-
+        if (document.getElementById("4").innerText === turno &&
+                document.getElementById("5").innerText === turno &&
+                document.getElementById("6").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("4").style.backgroundColor = "green";
+            document.getElementById("5").style.backgroundColor = "green";
+            document.getElementById("6").style.backgroundColor = "green";
             return;
         }
-        if ((document.getElementById("2").innerText ===
-            document.getElementById("5").innerText &&
-            document.getElementById("2").innerText) === document.getElementById("8").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            // test
-            console.log(document.getElementById("2").innerText);
-            console.log(document.getElementById("5").innerText);
-            console.log(document.getElementById("8").innerText);
-            console.log(document.getElementById(symbol).innerText);
+        if (document.getElementById("7").innerText === turno &&
+                document.getElementById("8").innerText === turno &&
+                document.getElementById("9").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("7").style.backgroundColor = "green";
+            document.getElementById("8").style.backgroundColor = "green";
+            document.getElementById("9").style.backgroundColor = "green";
             return;
-
         }
-        if ((document.getElementById("3").innerText ===
-            document.getElementById("6").innerText &&
-            document.getElementById("3").innerText) === document.getElementById("9").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            // test
-            console.log(document.getElementById("3").innerText);
-            console.log(document.getElementById("6").innerText);
-            console.log(document.getElementById("9").innerText);
-            console.log(document.getElementById(symbol).innerText);
+        if (document.getElementById("1").innerText === turno &&
+                document.getElementById("4").innerText === turno &&
+                document.getElementById("7").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("1").style.backgroundColor = "green";
+            document.getElementById("4").style.backgroundColor = "green";
+            document.getElementById("7").style.backgroundColor = "green";
             return;
-
         }
-        if ((document.getElementById("1").innerText ===
-            document.getElementById("5").innerText &&
-            document.getElementById("1").innerText) === document.getElementById("9").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            // test
-            console.log(document.getElementById("1").innerText);
-            console.log(document.getElementById("5").innerText);
-            console.log(document.getElementById("9").innerText);
-            console.log(document.getElementById(symbol).innerText);
+        if (document.getElementById("2").innerText === turno &&
+                document.getElementById("5").innerText === turno &&
+                document.getElementById("8").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("2").style.backgroundColor = "green";
+            document.getElementById("5").style.backgroundColor = "green";
+            document.getElementById("8").style.backgroundColor = "green";
             return;
-
-
         }
-        if ((document.getElementById("3").innerText ===
-            document.getElementById("5").innerText &&
-            document.getElementById("3").innerText) === document.getElementById("7").innerText) {
-            document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
-            mensaje = false;
-            // test
-            console.log(document.getElementById("3").innerText);
-            console.log(document.getElementById("5").innerText);
-            console.log(document.getElementById("7").innerText);
-            console.log(document.getElementById(symbol).innerText);
+        if (document.getElementById("3").innerText === turno &&
+                document.getElementById("6").innerText === turno &&
+                document.getElementById("9").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("3").style.backgroundColor = "green";
+            document.getElementById("6").style.backgroundColor = "green";
+            document.getElementById("9").style.backgroundColor = "green";
             return;
-
         }
-        
-    }
-    function prueba() {
-        console.log(("x" && "x" && "o") == "o")
+        if (document.getElementById("1").innerText === turno &&
+                document.getElementById("5").innerText === turno &&
+                document.getElementById("9").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("1").style.backgroundColor = "green";
+            document.getElementById("5").style.backgroundColor = "green";
+            document.getElementById("9").style.backgroundColor = "green";
+            return;
+        }
+        if (document.getElementById("3").innerText === turno &&
+                document.getElementById("5").innerText && turno &&
+                document.getElementById("7").innerText === turno) {
+            document.getElementById("ganador").innerText = "Ganaron las " + turno + "'s";
+            document.getElementById("3").style.backgroundColor = "green";
+            document.getElementById("5").style.backgroundColor = "green";
+            document.getElementById("7").style.backgroundColor = "green";
+        }
     }
 </script>
 </body>
