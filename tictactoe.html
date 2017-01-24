@@ -84,66 +84,115 @@
     }
 
     function evaluar(symbol) {
-        if ((document.getElementById("1").innerText && 
+        if ((document.getElementById("1").innerText === 
             document.getElementById("2").innerText && 
-            document.getElementById("3").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("1").innerText) === document.getElementById("3").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            
+            // test
+            console.log(document.getElementById("1").innerText);
+            console.log(document.getElementById("2").innerText);
+            console.log(document.getElementById("3").innerText);
+            console.log(document.getElementById(symbol).innerText);
+            return;
         }
-        if ((document.getElementById("4").innerText &&
+        if ((document.getElementById("4").innerText ===
             document.getElementById("5").innerText &&
-            document.getElementById("6").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("4").innerText) === document.getElementById("6").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            // test
+            console.log(document.getElementById("4").innerText);
+            console.log(document.getElementById("5").innerText);
+            console.log(document.getElementById("6").innerText);
+            console.log(document.getElementById(symbol).innerText);
+            return;
 
         }
-        if ((document.getElementById("7").innerText &&
+        if ((document.getElementById("7").innerText ===
             document.getElementById("8").innerText &&
-            document.getElementById("9").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("7").innerText) === document.getElementById("9").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            // test
+            console.log(document.getElementById("7").innerText);
+            console.log(document.getElementById("8").innerText);
+            console.log(document.getElementById("9").innerText);
+            return;
 
+            console.log(document.getElementById(symbol).innerText);
         }
-        if ((document.getElementById("1").innerText &&
+        if ((document.getElementById("1").innerText ===
             document.getElementById("4").innerText &&
-            document.getElementById("7").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("1").innerText) === document.getElementById("7").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            // test
+            console.log(document.getElementById("1").innerText);
+            console.log(document.getElementById("4").innerText);
+            console.log(document.getElementById("7").innerText);
+            console.log(document.getElementById(symbol).innerText);
 
+            return;
         }
-        if ((document.getElementById("2").innerText &&
+        if ((document.getElementById("2").innerText ===
             document.getElementById("5").innerText &&
-            document.getElementById("8").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("2").innerText) === document.getElementById("8").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            // test
+            console.log(document.getElementById("2").innerText);
+            console.log(document.getElementById("5").innerText);
+            console.log(document.getElementById("8").innerText);
+            console.log(document.getElementById(symbol).innerText);
+            return;
 
         }
-        if ((document.getElementById("3").innerText &&
+        if ((document.getElementById("3").innerText ===
             document.getElementById("6").innerText &&
-            document.getElementById("9").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("3").innerText) === document.getElementById("9").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            // test
+            console.log(document.getElementById("3").innerText);
+            console.log(document.getElementById("6").innerText);
+            console.log(document.getElementById("9").innerText);
+            console.log(document.getElementById(symbol).innerText);
+            return;
 
         }
-        if ((document.getElementById("1").innerText &&
+        if ((document.getElementById("1").innerText ===
             document.getElementById("5").innerText &&
-            document.getElementById("9").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("1").innerText) === document.getElementById("9").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            // test
+            console.log(document.getElementById("1").innerText);
+            console.log(document.getElementById("5").innerText);
+            console.log(document.getElementById("9").innerText);
+            console.log(document.getElementById(symbol).innerText);
+            return;
 
 
         }
-        if ((document.getElementById("3").innerText &&
+        if ((document.getElementById("3").innerText ===
             document.getElementById("5").innerText &&
-            document.getElementById("7").innerText) == document.getElementById(symbol).innerText) {
+            document.getElementById("3").innerText) === document.getElementById("7").innerText) {
             document.getElementById("ganador").innerText = "Ganaron las " + document.getElementById(symbol).innerText + "'s";
             mensaje = false;
+            // test
+            console.log(document.getElementById("3").innerText);
+            console.log(document.getElementById("5").innerText);
+            console.log(document.getElementById("7").innerText);
+            console.log(document.getElementById(symbol).innerText);
+            return;
 
         }
         
     }
     function prueba() {
-        console.log("o" == ("x" || "o"))
+        console.log(("x" && "x" && "o") == "o")
     }
 </script>
 </body>
