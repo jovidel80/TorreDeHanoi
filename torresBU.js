@@ -2,16 +2,18 @@ const altura = "40px";
 
 var cuerpo;
 
+var movimientos = 0;
+
 var cuadro1 = new Cuadro(true);
 var cuadro2 = new Cuadro(false);
 var cuadro3 = new Cuadro(false);
 
-var origen;
 var fichaSeleccionada;
+var origen;
 var destino;
 
 function crearDiv() {
-    caja = document.createElement("div");
+    var caja = document.createElement("div");
     return caja;
 }
 
@@ -44,7 +46,7 @@ function out3() {
 }
 
 function out(cuadro) {
-    cuadro.caja.style.backgroundColor = "#FFFFFF";
+    cuadro.caja.style.backgroundColor = "white";
 }
 
 function click1() {
@@ -66,7 +68,7 @@ function click(cuadro) {
     if (cuadro.elegido) {
         seleccionarOrigenDestino(cuadro);
     } else {
-        cuadro.caja.style.borderColor = "#000000";
+        cuadro.caja.style.borderColor = "black";
         reiniciarOrigenDestino();
     }
 }
@@ -81,7 +83,7 @@ function rellenarContenido() {
     return contenido;
 }
 
-function rellenaFichas() {
+function rellenarFichas() {
     var contenido = new Array();
 
     contenido[0] = new Relleno();
@@ -151,7 +153,7 @@ function Cuadro(cajaInicial) {
     this.contenido;
 
     if (cajaInicial) {
-        this.contenido = rellenaFichas();
+        this.contenido = rellenarFichas();
     } else {
         this.contenido = rellenarContenido();
     }
@@ -160,7 +162,7 @@ function Cuadro(cajaInicial) {
         this.caja.appendChild(this.contenido[i].caja);
     }
 
-    this.tieneFichas = function () {
+    this.tieneFichas = function() {
         var rellenos = 0;
 
         for (var i = 0; i < this.contenido.length; i++) {
@@ -176,7 +178,7 @@ function Cuadro(cajaInicial) {
         }
     };
 
-    this.obtenerFichaSuperior = function () {
+    this.obtenerFichaSuperior = function() {
         for (var i = 0; i < this.contenido.length; i++) {
             if (!(this.contenido[i] instanceof Relleno)) {
                 return this.contenido[i];
@@ -184,7 +186,7 @@ function Cuadro(cajaInicial) {
         }
     };
 
-    this.quitarFichaSuperior = function () {
+    this.quitarFichaSuperior = function() {
         for (var i = 0; i < this.contenido.length; i++) {
             if (!(this.contenido[i] instanceof Relleno)) {
                 fichaSeleccionada = this.contenido[i];
@@ -193,21 +195,21 @@ function Cuadro(cajaInicial) {
             }
         }
     };
-    
-    this.insertarFichaSuperior = function () {
+
+    this.insertarFichaSuperior = function() {
         for (var i = this.contenido.length - 1; i >= 0; i--) {
             if (this.contenido[i] instanceof Relleno) {
-                fichaSeleccionada = this.contenido[i];
+                this.contenido[i] = fichaSeleccionada;
                 break;
             }
         }
     };
 
-    this.redibujarCaja = function () {
+    this.redibujarCaja = function() {
         while (this.caja.hasChildNodes()) {
             this.caja.removeChild(this.caja.lastChild);
         }
-        
+
         for (var i = 0; i < this.contenido.length; i++) {
             this.caja.appendChild(this.contenido[i].caja);
         }
@@ -217,34 +219,81 @@ function Cuadro(cajaInicial) {
 function seleccionarOrigenDestino(cuadro) {
     if (origen == undefined) {
         if (cuadro.tieneFichas()) {
-            cuadro.caja.style.borderColor = "#FF552F";
+            cuadro.caja.style.borderColor = "red";
             origen = cuadro;
             origen.elegido = true;
         }
-    } else if (origen != undefined && destino == undefined) {
+    } else if(origen != undefined && destino == undefined) {
         destino = cuadro;
         destino.elegido = true;
-    }
 
-    if (origen != destino) {
-        if (!destino.tieneFichas() || (origen.obtenerFichaSuperior().valor < destino.obtenerFichaSuperior().valor)) {
-            origen.quitarFichaSuperior();
-            origen.redibujarCaja();
-            destino.insertarFichaSuperior();
-            destino.redibujarCaja();
+        if (origen != destino) {
+            if (!destino.tieneFichas() || (origen.obtenerFichaSuperior().valor < destino.obtenerFichaSuperior().valor)) {
+                origen.quitarFichaSuperior();
+                origen.redibujarCaja();
+                destino.insertarFichaSuperior();
+                destino.redibujarCaja();
+                movimientos++;
+                actualizarContador();
+            }
         }
     }
-    
+
     if (destino != undefined && origen != undefined) {
         reiniciarOrigenDestino();
     }
+
+    if (comprobarVictoria()) {
+        victoria();
+    }
+}
+
+function comprobarVictoria() {
+    if (cuadro3.contenido[0] instanceof Relleno &&
+        cuadro3.contenido[1] instanceof FichaS &&
+        cuadro3.contenido[2] instanceof FichaM &&
+        cuadro3.contenido[3] instanceof FichaL &&
+        cuadro3.contenido[4] instanceof FichaXL) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function victoria() {
+    var textoTitulo = document.createTextNode("¡Has ganado!");
+    var textoSubtitulo = document.createTextNode("Movimientos utilizados: " + movimientos);
+    var textoConsejo = document.createTextNode("Pulsa F5 para jugar de nuevo.");
+
+    cuerpo.removeChild(cuadro1.caja);
+    cuerpo.removeChild(cuadro2.caja);
+    cuerpo.removeChild(cuadro3.caja);
+    cuerpo.removeChild(document.getElementById("contador"));
+
+    var titulo = document.createElement("h1");
+    titulo.style.color = "red";
+    titulo.appendChild(textoTitulo);
+
+    var subtitulo = document.createElement("h2");
+    subtitulo.appendChild(textoSubtitulo);
+
+    var consejo = document.createElement("h3");
+    consejo.appendChild(textoConsejo);
+
+    cuerpo.appendChild(titulo);
+    cuerpo.appendChild(subtitulo);
+    cuerpo.appendChild(consejo);
 }
 
 function reiniciarOrigenDestino() {
-    origen.caja.style.borderColor = "#000000";
-    
-    origen.elegido = false;
-    destino.elegido = false;
+    if (origen != undefined) {
+        origen.caja.style.borderColor = "black";
+        origen.elegido = false;
+    }
+    if (destino != undefined) {
+        destino.caja.style.borderColor = "black";
+        destino.elegido = false;
+    }
 
     origen = undefined;
     destino = undefined;
@@ -254,8 +303,15 @@ function reiniciarOrigenDestino() {
     cuadro3.elegido = false;
 }
 
+function actualizarContador() {
+    var parrafo = document.getElementById("contador");
+    parrafo.innerHTML = "Movimientos: " + movimientos;
+}
+
 function iniciar() {
     cuerpo = document.getElementsByTagName("body")[0];
+    cuerpo.style.textAlign = "center";
+
     cuerpo.appendChild(cuadro1.caja);
     cuerpo.appendChild(cuadro2.caja);
     cuerpo.appendChild(cuadro3.caja);
@@ -271,6 +327,14 @@ function iniciar() {
     cuadro1.caja.addEventListener("click", click1, false);
     cuadro2.caja.addEventListener("click", click2, false);
     cuadro3.caja.addEventListener("click", click3, false);
+
+    var texto = document.createTextNode("Movimientos: " + movimientos);
+    var parrafo = document.createElement("p");
+    parrafo.style.clear = "both";
+    parrafo.style.paddingTop = "3em";
+    parrafo.setAttribute("id", "contador");
+    parrafo.appendChild(texto);
+    cuerpo.appendChild(parrafo);
 }
 
 window.addEventListener("load", iniciar, false);
