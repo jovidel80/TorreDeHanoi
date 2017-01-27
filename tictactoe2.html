@@ -2,26 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tic Tac Toe Version 2</title>
+    <title>La Vieja</title>
     <style>
-        .square {
-            
+        td {
+            width: 100px;
+            height: 100px;
+            border: solid;
+            text-align: center;
+            font-size: 60pt;
+            font-family: Verdana;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: auto;
+            -webkit-user-select: none;
+        }
+
+        #titulo {
+            text-align: center;
+        }
+
+        #message {
+            text-align: center;
+            font-size: 20pt;
         }
     </style>
     <script>
-        function nextMove() {
-            
-            
+        function startGame() {
+            for (var i = 1; i <= 9; i++) {
+                clearBox(i);
+            }
+            document.turn = "X";
+            if (Math.random() < 0.5) {
+                console.log(Math.random())
+                document.turn = "O";
+            }
+            document.winner = null;
+            setMessage(document.turn + " comienza\n")
+        }
+
+        function nextMove(square) {
+            if (document.winner != null) {
+                setMessage("Las " + document.winner + " ya ganaron, comienza de nuevo");
+            } else if (square.innerText === "") {
+                square.innerText = document.turn;
+                switchTurn();
+            } else {
+                setMessage("El cuadrado ya ha sido usado");
+            }
+        }
+
+        function setMessage(msg) {
+            document.getElementById("message").innerText = msg;
+        }
+
+        function switchTurn() {
+            if (checkForWinner(document.turn)) {
+                setMessage("Las " + document.turn + " GANARON\nFelicitaciones!!!");
+                document.winner = document.turn;
+            } else if (document.turn === "X") {
+                document.turn = "O";
+                setMessage("Es turno de las " + document.turn);
+            } else {
+                document.turn = "X";
+                setMessage("Es turno de las " + document.turn);
+            }
+        }
+
+        function checkForWinner(move) {
+            var result = false;
+            if (checkRow(1, 2, 3, move) ||
+                    checkRow(4, 5, 6, move) ||
+                    checkRow(7, 8, 9, move) ||
+                    checkRow(1, 4, 7, move) ||
+                    checkRow(2, 5, 8, move) ||
+                    checkRow(3, 6, 9, move) ||
+                    checkRow(1, 5, 9, move) ||
+                    checkRow(3, 5, 7, move)) {
+                result = true;
+            }
+            return result;
+        }
+
+        function checkRow(a, b, c, move) {
+            var result = false;
+            if (getBox(a) === move && getBox(b) === move && getBox(c) === move) {
+                document.getElementById("s" + a).style.backgroundColor = "green";
+                document.getElementById("s" + b).style.backgroundColor = "green";
+                document.getElementById("s" + c).style.backgroundColor = "green";
+                result = true;
+            }
+            return result;
+        }
+
+        function getBox(number) {
+            return document.getElementById("s" + number).innerText;
+        }
+
+        function clearBox(number) {
+            document.getElementById("s" + number).innerText = "";
+            document.getElementById("s" + number).style.backgroundColor = defaultStatus;
         }
     </script>
 </head>
-<body>
-    <h1>Tic-Tac-Toe Game</h1>
-    <div id="message">messages will go here</div>
-    <table>
-        <tr>
-            <td class="square" onclick=""></td>
-        </tr>
-    </table>
+<body onload="startGame()">
+<h1 id="titulo">El juego de la vieja</h1>
+<div id="message">aqui va el mensaje</div>
+<br>
+<table>
+    <tr>
+        <td id="s1" onclick="nextMove(this)"></td>
+        <td id="s2" onclick="nextMove(this)"></td>
+        <td id="s3" onclick="nextMove(this)"></td>
+    </tr>
+    <tr>
+        <td id="s4" onclick="nextMove(this)"></td>
+        <td id="s5" onclick="nextMove(this)"></td>
+        <td id="s6" onclick="nextMove(this)"></td>
+    </tr>
+    <tr>
+        <td id="s7" onclick="nextMove(this)"></td>
+        <td id="s8" onclick="nextMove(this)"></td>
+        <td id="s9" onclick="nextMove(this)"></td>
+    </tr>
+</table>
+<br>
+<div style="text-align: center">
+    <a href="javascript:startGame()">
+        <button>Juega de nuevo</button>
+    </a>
+</div>
 </body>
 </html>
